@@ -15,3 +15,7 @@ print("My dogs name is " + my_dog.name.title() + ".")
 print(my_dog.name.title() + " is " + str(my_dog.age))
 my_dog.sit()
 my_dog.roll_over()
+
+
+
+

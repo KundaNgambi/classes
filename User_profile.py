@@ -1,6 +1,6 @@
 import phonenumbers as pn
-from phonenumbers import geocoder, carrier
 import pycountry
+
 
 class Users:
     def __init__(self, first_name, middle_name, last_name, age, phone_number, country, email):
@@ -11,6 +11,7 @@ class Users:
         self.phone_number = phone_number
         self.email = email
         self.country = country
+        self.login_attempts = 0
 
     def users_name(self):
         if self.middle_name.title() == "None":
@@ -25,6 +26,7 @@ class Users:
 
     def users_country(self):
         print("Country: " + self.country.title())
+
     def users_phone_number(self):
         try:
             country_data = pycountry.countries.get(name=self.country)
@@ -40,6 +42,13 @@ class Users:
 
     def users_email(self):
         print("Email: " + self.email)
+    def user_login_attempts(self):
+        print("You have made " + str(self.login_attempts) + " attempts to login attempts.")
+    def increased_login_attempts(self,attempts):
+        self.login_attempts += attempts
+    def reset_login_attempts(self):
+        self.login_attempts = 0
+
 
 #user_input
 user_first_name = input("Enter first name: ")
@@ -49,11 +58,14 @@ user_age = input("Enter your age: ")
 user_country = input("Enter your country : ")
 user_phone_number = input("Enter your phone_number: ")
 user_email = input("Enter your email: ")
-print()
 
 #intantiate
-my_details = Users(user_first_name, user_middle_name, user_last_name, user_age, user_phone_number, user_country, user_email)
-my_details.users_name()
-my_details.users_age()
-my_details.users_phone_number()
-my_details.users_email()
+my_details = Users(user_first_name, user_middle_name, user_last_name, user_age, user_phone_number, user_country,
+                   user_email)
+# my_details.users_name()
+# my_details.users_age()
+# my_details.users_phone_number()
+# my_details.users_email()
+# my_details.increased_login_attempts(10)
+# my_details.reset_login_attempts()
+# my_details.user_login_attempts()
