@@ -1,6 +1,5 @@
 class Glossary:
     def __init__(self, key=None, item=None):
-        # Only create glossary_type if key and item are provided
         if key and item:
             self.key = key.lower()
             self.item = item.lower()
@@ -8,17 +7,27 @@ class Glossary:
         else:
             self.glossary_type = {}
 
-    # def food_manager(self):
-    #     print(self.glossary_type)
+    def food_manager(self):
+        print(self.glossary_type)
 
     def update_food_manager(self):
-        self.key = input("What category would you like to add? ").lower()
-        self.item = input("What food would you like to add to it? ").lower()
+        categories = input("Enter categories separated by commas: ").lower().split(",")
+        foods = input("Enter corresponding foods separated by commas (in same order): ").lower().split(",")
 
-        if self.key in self.glossary_type:
-            self.glossary_type[self.key].append(self.item)
-        else:
-            self.glossary_type[self.key] = [self.item]
+        # Ensure both inputs have the same length
+        if len(categories) != len(foods):
+            print("Error: Number of categories and foods must match.")
+            return
+
+        # Add each category and corresponding food
+        for category, food in zip(categories, foods):
+            category = category.strip()
+            food = food.strip()
+
+            if category in self.glossary_type:
+                self.glossary_type[category].append(food)
+            else:
+                self.glossary_type[category] = [food]
 
     def get_food(self):
         if self.key in self.glossary_type:
@@ -26,6 +35,7 @@ class Glossary:
         else:
             print("No food has been added yet.")
 
+    # New method to check all keys and items
     def check_glossary(self):
         if self.glossary_type:
             print("Current glossary categories and items:")
@@ -35,9 +45,8 @@ class Glossary:
             print("The glossary is empty.")
 
 
-# Instantiate without arguments
+# Example usage
 my_glossary = Glossary()
-# my_glossary.food_manager()
-my_glossary.update_food_manager()
-my_glossary.get_food()
-my_glossary.check_glossary()
+my_glossary.food_manager()
+my_glossary.update_food_manager()  # Add multiple categories and foods
+my_glossary.check_glossary()  # Check current keys and items
