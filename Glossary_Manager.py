@@ -1,25 +1,43 @@
 class Glossary:
-    def __init__(self, key, item):
-        self.key = key
-        self.item = item
-        self.glossary_type = {self.key: [self.item]}
-
-    def food_manager(self):
-        print(self.glossary_type)
-
-    def update_food_manager(self, update):
-        if self.key in self.glossary_type:
-            self.glossary_type[self.key].append(update)
+    def __init__(self, key=None, item=None):
+        # Only create glossary_type if key and item are provided
+        if key and item:
+            self.key = key.lower()
+            self.item = item.lower()
+            self.glossary_type = {self.key: [self.item]}
         else:
-            self.glossary_type[self.key] = [update]
+            self.glossary_type = {}
+
+    # def food_manager(self):
+    #     print(self.glossary_type)
+
+    def update_food_manager(self):
+        self.key = input("What category would you like to add? ").lower()
+        self.item = input("What food would you like to add to it? ").lower()
+
+        if self.key in self.glossary_type:
+            self.glossary_type[self.key].append(self.item)
+        else:
+            self.glossary_type[self.key] = [self.item]
 
     def get_food(self):
-        print("You've added " + ", ".join(self.glossary_type[self.key]) + " to " + self.key)
+        if self.key in self.glossary_type:
+            print("You've added " + ", ".join(self.glossary_type[self.key]) + " to " + self.key)
+        else:
+            print("No food has been added yet.")
+
+    def check_glossary(self):
+        if self.glossary_type:
+            print("Current glossary categories and items:")
+            for key, items in self.glossary_type.items():
+                print(f"{key.capitalize()}: {', '.join(items)}")
+        else:
+            print("The glossary is empty.")
 
 
-food_type = input("What food category would you like to add: ")
-actual_food = input("Enter the food you would like to add: ")
-my_glossary = Glossary(food_type, actual_food)
-my_glossary.food_manager()
-my_glossary.update_food_manager("Rice")
+# Instantiate without arguments
+my_glossary = Glossary()
+# my_glossary.food_manager()
+my_glossary.update_food_manager()
 my_glossary.get_food()
+my_glossary.check_glossary()
