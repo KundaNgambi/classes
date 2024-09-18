@@ -1,31 +1,35 @@
 class Glossary:
+    #initialized with key and item as parameters
     def __init__(self, key=None, item=None):
         if key and item:
+            #converted to lower case to avoid errors caused from improper case handling
             self.key = key.lower()
             self.item = item.lower()
             self.glossary_type = {self.key: [self.item]}
         else:
             self.glossary_type = {}
 
-    def food_manager(self):
-        print(self.glossary_type)
+    # def food_manager(self):
+    #     print(self.glossary_type)
 
     def update_food_manager(self):
-        categories = input("Enter categories separated by commas: ").lower().split(",")
-        foods = input("Enter corresponding foods separated by commas (in same order): ").lower().split(",")
+        while True:
+            categories = input("Enter categories separated by commas: ").lower().split(",")
+            foods = input("Enter corresponding foods separated by commas (in same order).if multiple items are to be "
+                          "added to same category, separate using semi colon: ").lower().split(";")
 
-        # Ensure both inputs have the same length
-        if len(categories) != len(foods):
-            print("Error: Number of categories and foods must match.")
-            return
+            # Ensure both inputs have the same length
+            if len(categories) != len(foods):
+                print("Error: Number of categories and foods must match.Please try again")
+            continue
 
         # Add each category and corresponding food
         for category, food in zip(categories, foods):
             category = category.strip()
-            food = food.strip()
+            food_list = [item.strip() for item in food.split(",")]
 
             if category in self.glossary_type:
-                self.glossary_type[category].append(food)
+                self.glossary_type[category].extend(food_list)
             else:
                 self.glossary_type[category] = [food]
 
@@ -47,6 +51,6 @@ class Glossary:
 
 # Example usage
 my_glossary = Glossary()
-my_glossary.food_manager()
+# my_glossary.food_manager()
 my_glossary.update_food_manager()  # Add multiple categories and foods
 my_glossary.check_glossary()  # Check current keys and items
